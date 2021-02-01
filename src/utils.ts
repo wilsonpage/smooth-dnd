@@ -79,8 +79,12 @@ export const isScrollingOrHidden = (element: HTMLElement, axis: Axis) => {
   const style = window.getComputedStyle(element);
   const overflow = style['overflow'];
   const overFlowAxis = style[`overflow-${axis}` as any];
-  const general = overflow === 'auto' || overflow === 'scroll' || overflow === 'hidden';
-  const dimensionScroll = overFlowAxis === 'auto' || overFlowAxis === 'scroll' || overFlowAxis === 'hidden';
+  const general =
+    overflow === 'auto' || overflow === 'scroll' || overflow === 'hidden';
+  const dimensionScroll =
+    overFlowAxis === 'auto' ||
+    overFlowAxis === 'scroll' ||
+    overFlowAxis === 'hidden';
   return general || dimensionScroll;
 };
 
@@ -101,12 +105,26 @@ export const getVisibleRect = (element: HTMLElement, elementRect: Rect) => {
   let rect = elementRect || getContainerRect(element);
   currentElement = element.parentElement!;
   while (currentElement) {
-    if (hasBiggerChild(currentElement, 'x') && isScrollingOrHidden(currentElement, 'x')) {
-      rect = getIntersectionOnAxis(rect, currentElement.getBoundingClientRect(), 'x');
+    if (
+      hasBiggerChild(currentElement, 'x') &&
+      isScrollingOrHidden(currentElement, 'x')
+    ) {
+      rect = getIntersectionOnAxis(
+        rect,
+        currentElement.getBoundingClientRect(),
+        'x'
+      );
     }
 
-    if (hasBiggerChild(currentElement, 'y') && isScrollingOrHidden(currentElement, 'y')) {
-      rect = getIntersectionOnAxis(rect, currentElement.getBoundingClientRect(), 'y');
+    if (
+      hasBiggerChild(currentElement, 'y') &&
+      isScrollingOrHidden(currentElement, 'y')
+    ) {
+      rect = getIntersectionOnAxis(
+        rect,
+        currentElement.getBoundingClientRect(),
+        'y'
+      );
     }
 
     currentElement = currentElement.parentElement!;
@@ -115,13 +133,16 @@ export const getVisibleRect = (element: HTMLElement, elementRect: Rect) => {
   return rect;
 };
 
-export const getParentRelevantContainerElement = (element: Element, relevantContainers: IContainer[]) => {
+export const getParentRelevantContainerElement = (
+  element: Element,
+  relevantContainers: IContainer[]
+) => {
   let current: ElementX = element as ElementX;
 
   while (current) {
     if ((current as ElementX)[containerInstance]) {
       const container = current[containerInstance];
-      if (relevantContainers.some(p => p === container)) {
+      if (relevantContainers.some((p) => p === container)) {
         return container;
       }
     }
@@ -129,7 +150,7 @@ export const getParentRelevantContainerElement = (element: Element, relevantCont
   }
 
   return null;
-}
+};
 
 export const listenScrollParent = (element: HTMLElement, clb: () => void) => {
   let scrollers: HTMLElement[] = [];
@@ -139,7 +160,10 @@ export const listenScrollParent = (element: HTMLElement, clb: () => void) => {
   function setScrollers() {
     let currentElement = element;
     while (currentElement) {
-      if (isScrolling(currentElement, 'x') || isScrolling(currentElement, 'y')) {
+      if (
+        isScrolling(currentElement, 'x') ||
+        isScrolling(currentElement, 'y')
+      ) {
         scrollers.push(currentElement);
       }
       currentElement = currentElement.parentElement!;
@@ -149,18 +173,18 @@ export const listenScrollParent = (element: HTMLElement, clb: () => void) => {
   function dispose() {
     stop();
     scrollers = null!;
-  };
+  }
 
   function start() {
     if (scrollers) {
-      scrollers.forEach(p => p.addEventListener('scroll', clb));
+      scrollers.forEach((p) => p.addEventListener('scroll', clb));
       window.addEventListener('scroll', clb);
     }
   }
 
   function stop() {
     if (scrollers) {
-      scrollers.forEach(p => p.removeEventListener('scroll', clb));
+      scrollers.forEach((p) => p.removeEventListener('scroll', clb));
       window.removeEventListener('scroll', clb);
     }
   }
@@ -168,7 +192,7 @@ export const listenScrollParent = (element: HTMLElement, clb: () => void) => {
   return {
     dispose,
     start,
-    stop
+    stop,
   };
 };
 
@@ -199,14 +223,14 @@ export const hasClass = (element: HTMLElement, cls: string) => {
   return (
     element.className
       .split(' ')
-      .map(p => p)
+      .map((p) => p)
       .indexOf(cls) > -1
   );
 };
 
 export const addClass = (element: Element | null | undefined, cls: string) => {
   if (element) {
-    const classes = element.className.split(' ').filter(p => p);
+    const classes = element.className.split(' ').filter((p) => p);
     if (classes.indexOf(cls) === -1) {
       classes.unshift(cls);
       element.className = classes.join(' ');
@@ -216,7 +240,7 @@ export const addClass = (element: Element | null | undefined, cls: string) => {
 
 export const removeClass = (element: HTMLElement, cls: string) => {
   if (element) {
-    const classes = element.className.split(' ').filter(p => p && p !== cls);
+    const classes = element.className.split(' ').filter((p) => p && p !== cls);
     element.className = classes.join(' ');
   }
 };
@@ -242,7 +266,11 @@ export const removeChildAt = (parent: HTMLElement, index: number) => {
   return parent.removeChild(parent.children[index]);
 };
 
-export const addChildAt = (parent: HTMLElement, child: HTMLElement, index: number) => {
+export const addChildAt = (
+  parent: HTMLElement,
+  child: HTMLElement,
+  index: number
+) => {
   if (index >= parent.children.length) {
     parent.appendChild(child);
   } else {
@@ -271,12 +299,12 @@ export const isMobile = () => {
 
 export const clearSelection = () => {
   if (window.getSelection) {
-    if (window.getSelection().empty) {
+    if (window.getSelection()?.empty) {
       // Chrome
-      window.getSelection().empty();
-    } else if (window.getSelection().removeAllRanges) {
+      window.getSelection()?.empty();
+    } else if (window.getSelection()?.removeAllRanges) {
       // Firefox
-      window.getSelection().removeAllRanges();
+      window.getSelection()?.removeAllRanges();
     }
   } else if ((window.document as any).selection) {
     // IE?
@@ -295,8 +323,10 @@ export const getElementCursor = (element: Element | null) => {
   return null;
 };
 
-
-export const getDistanceToParent = (parent: HTMLElement, child: HTMLElement): number | null => {
+export const getDistanceToParent = (
+  parent: HTMLElement,
+  child: HTMLElement
+): number | null => {
   let current: Element | null = child;
   let dist = 0;
   while (current) {
@@ -308,7 +338,7 @@ export const getDistanceToParent = (parent: HTMLElement, child: HTMLElement): nu
   }
 
   return null;
-}
+};
 
 export function isVisible(rect: Rect): boolean {
   return !(rect.bottom <= rect.top || rect.right <= rect.left);

@@ -1,27 +1,24 @@
 {
-	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
-		"lib": [
-			"dom",
-			"es2017"
-		],
-		"module": "esnext",
-		"moduleResolution": "node",
-		// "noEmit": true,
-		"noUnusedLocals": false,
-		"noUnusedParameters": false,
-		"preserveConstEnums": true,
-		"removeComments": false,
-		"skipLibCheck": true,
-		"sourceMap": true,
-		"strict": true,
-		"target": "es5",
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
-		"strictFunctionTypes": true,
-		"declaration": true,
-		"declarationDir": "dist",
-		"strictNullChecks": true,
-		"noImplicitThis": false,
-	}
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "checkJs": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "noImplicitThis": true
+  },
+
+  "exclude": ["node_modules"],
+  "include": ["*.d.ts", "**/*.tsx", "**/*.ts", "**/*.js"]
 }
