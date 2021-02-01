@@ -508,7 +508,7 @@ function invalidateShadowBeginEndIfNeeded(params: ContainerProps) {
 function getNextAddedIndex(params: ContainerProps) {
   const getIndexForPos = getDragInsertionIndex(params);
   return ({ dragResult }: DragInfo) => {
-    let index = null;
+    let index: any = null;
     if (dragResult.pos !== null) {
       index = getIndexForPos({ dragResult });
       if (index === null) {
@@ -652,8 +652,8 @@ function getShadowBeginEnd({ draggables, layout }: ContainerProps) {
         let begin = Number.MIN_SAFE_INTEGER;
         let dropAreaBegin = 0;
         let dropAreaEnd = 0;
-        let afterBounds = null;
-        let beforeBounds = null;
+        let afterBounds: any = null;
+        let beforeBounds: any = null;
         if (beforeIndex === removedIndex) {
           beforeIndex--;
         }
